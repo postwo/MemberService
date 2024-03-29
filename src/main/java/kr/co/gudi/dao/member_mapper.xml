@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="kr.co.gudi.dao.MemberDAO">	
+	<insert id="join" parameterType="map">
+		INSERT INTO member(id,pw,name,age,gender,email)
+			VALUES(#{id},#{pw},#{name},#{age},#{gender},#{email})
+	</insert>
+	
+	<insert id="setPermission">
+		INSERT INTO author(id,perm)
+			VALUES(#{param1}, #{param2})
+	</insert>	
+	
+	<select id="login" resultType="kr.co.gudi.dto.MemberDTO">
+		SELECT m.id, a.perm, m.name 
+			FROM member m left join author a
+				ON m.id = a.id
+				WHERE m.id = #{param1} AND m.pw = #{param2}	
+	</select>
+	
+	<select id="memberList" resultType="kr.co.gudi.dto.MemberDTO">
+		SELECT id,name,gender FROM member
+	</select>
+	
+	
+</mapper>
